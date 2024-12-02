@@ -2,13 +2,13 @@ import numpy as np
 from scipy.integrate import odeint
 import matplotlib.pyplot as plt
 
-r_1 = 0.057
-r_2 = 0.058
-r_3 = 0.059
-r_4 = 0.060
-r_5 = 0.061
-r_6 = 0.062
-r_7 = 0.063
+r_1 = 0.05
+r_2 = 0.052
+r_3 = 0.053
+r_4 = 0.054
+r_5 = 0.058
+r_6 = 0.060
+r_7 = 0.062
 
 alpha = 0.06
 
@@ -33,13 +33,13 @@ r_6values = odeint(model, B0, t, args=(r_6,))
 r_7values = odeint(model, B0, t, args=(r_7,))
 
 plt.figure(figsize=(10, 6))
-plt.plot(t, r_1values, label=r"$B(t); r = 0.057$", color="red")
-plt.plot(t, r_2values, label=r"$B(t); r = 0.058$", color="green")
-plt.plot(t, r_3values, label=r"$B(t); r = 0.059$", color="skyblue")
-plt.plot(t, r_4values, label=r"$B(t); r = 0.060$", color="blue")
-plt.plot(t, r_5values, label=r"$B(t); r = 0.061$", color="navy")
-plt.plot(t, r_6values, label=r"$B(t); r = 0.062$", color="fuchsia")
-plt.plot(t, r_7values, label=r"$B(t); r = 0.063$", color="purple")
+plt.plot(t, r_1values, label=r"$B(t); r = 0.05$", color="red", linestyle='--')
+plt.plot(t, r_2values, label=r"$B(t); r = 0.052$", color="green", linestyle='--')
+plt.plot(t, r_3values, label=r"$B(t); r = 0.054$", color="skyblue", linestyle='--')
+plt.plot(t, r_4values, label=r"$B(t); r = 0.056$", color="blue", linestyle='--')
+plt.plot(t, r_5values, label=r"$B(t); r = 0.058$", color="navy", linestyle='--')
+plt.plot(t, r_6values, label=r"$B(t); r = 0.060$", color="fuchsia", linestyle='--')
+plt.plot(t, r_7values, label=r"$B(t); r = 0.062$", color="purple", linestyle='--')
 plt.plot(t, solution, label=r"$R(t)$", color="orange")
 plt.title("People over Working Age and People Under Working Age With Varying Birth Rate", fontsize=16)
 plt.xlabel("Time t (Years)", fontsize=14)
