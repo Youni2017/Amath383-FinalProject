@@ -9,7 +9,7 @@ t = np.linspace(0, 1000, 100)
 r_values = R(t)
 
 plt.figure(figsize=(10, 6))
-plt.plot(t, r_values, label=r"$R(t) = e^{-0.041867754t}(641.08e^{0.03678t} - 601.488e^{0.0318678t} + 15.59952)$", color="orange")
+plt.plot(t, r_values, label=r"$R(t) = e^{-0.041867754t}(641.08e^{0.03678t} - 601.488e^{0.0318678t} + 15.59952)$", color="blue")
 plt.title("Population Over Working Age (in Millions)", fontsize=16)
 plt.xlabel("Time t (Years)", fontsize=14)
 plt.ylabel("R(t)", fontsize=14)

@@ -2,49 +2,58 @@ import numpy as np
 from scipy.integrate import odeint
 import matplotlib.pyplot as plt
 
-r_1 = 0.05
-r_2 = 0.052
-r_3 = 0.053
-r_4 = 0.054
-r_5 = 0.058
-r_6 = 0.060
-r_7 = 0.062
-
+r_values = np.linspace(0.05, 0.085, 8)
 alpha = 0.06
-
-def model(B, t, r):
-    dBdt = r * B - alpha * B
-    return dBdt
+beta = 0.0193
+gamma = 0.0137
+delta = 0.04186
 
 B0 = 72.832
+R0 = 55.19152
+W0 = 211.52284
+C_values = []
+
 t = np.linspace(0, 1000, 100)
-solution = R(t)
 
-def R(t):
-    return np.exp(-0.041867754 * t) * (641.08 * np.exp(0.03678 * t) - 601.488 * np.exp(0.0318678 * t) + c_1)
+def C_solve(r):
+    right_side = (alpha * B0) / (r - alpha - (gamma - beta))
+    return W0 - right_side
 
-c_1 = 15.59952
-r_1values = odeint(model, B0, t, args=(r_1,))
-r_2values = odeint(model, B0, t, args=(r_2,))
-r_3values = odeint(model, B0, t, args=(r_3,))
-r_4values = odeint(model, B0, t, args=(r_4,))
-r_5values = odeint(model, B0, t, args=(r_5,))
-r_6values = odeint(model, B0, t, args=(r_6,))
-r_7values = odeint(model, B0, t, args=(r_7,))
+C_values = [C_solve(r) for r in r_values]
 
-plt.figure(figsize=(10, 6))
-plt.plot(t, r_1values, label=r"$B(t); r = 0.05$", color="red", linestyle='--')
-plt.plot(t, r_2values, label=r"$B(t); r = 0.052$", color="green", linestyle='--')
-plt.plot(t, r_3values, label=r"$B(t); r = 0.054$", color="skyblue", linestyle='--')
-plt.plot(t, r_4values, label=r"$B(t); r = 0.056$", color="blue", linestyle='--')
-plt.plot(t, r_5values, label=r"$B(t); r = 0.058$", color="navy", linestyle='--')
-plt.plot(t, r_6values, label=r"$B(t); r = 0.060$", color="fuchsia", linestyle='--')
-plt.plot(t, r_7values, label=r"$B(t); r = 0.062$", color="purple", linestyle='--')
-plt.plot(t, solution, label=r"$R(t)$", color="orange")
-plt.title("People over Working Age and People Under Working Age With Varying Birth Rate", fontsize=16)
-plt.xlabel("Time t (Years)", fontsize=14)
-plt.ylabel("Population (Millions)", fontsize=14)
-plt.grid(alpha=0.5)
-plt.ylim((-10,250))
-plt.legend(fontsize=12, loc='upper right')
+def model_b(B, t, r):
+    return r * B - alpha * B
+
+def model_r(R, t, r, C):
+    B_term = (alpha * B0) / (r - alpha - (gamma - beta)) * np.exp((r - alpha) * t)
+    return -delta * R + beta * (B_term + C * np.exp((gamma - beta) * t))
+
+B_solutions = []
+R_solutions = []
+
+for r, C in zip(r_values, C_values):
+    B_solution = odeint(model_b, B0, t, args=(r,))
+    R_solution = odeint(model_r, R0, t, args=(r, C))
+    B_solutions.append(B_solution.flatten())
+    R_solutions.append(R_solution.flatten())
+
+fig, axes = plt.subplots(2, 4, figsize=(20, 10))
+axes = axes.flatten()
+
+custom_xlim = (0, 1000)
+custom_ylim = (0, 800)
+
+plt.setp(axes, xlim=custom_xlim)
+
+
+for i, r in enumerate(r_values):
+    axes[i].plot(t, B_solutions[i], label=f"$B(t)$; r = {r:.3f}", color="red", linestyle='--')
+    axes[i].plot(t, R_solutions[i], label=f"$R(t)$; r = {r:.3f}", color="blue")
+    axes[i].legend()
+    axes[i].set_title(f"Plots for r = {r:.3f}")
+    axes[i].set_xlabel("Time")
+    axes[i].set_ylabel("Value")
+    axes[i].set_ylim(bottom=0)
+
+plt.tight_layout()
 plt.show()
