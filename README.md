@@ -23,9 +23,9 @@ Based on our model, we predict that adjusting the birth rate plays a critical ro
 ## Project Files and Descriptions  
 
 1. **`0_AMath383_A_POPULATION_AGING_MODEL.pdf`**: Contains the complete project paper.  
-2. **`1_population_data.xlsx`**: Contains data used to determine the values of $n_i$ and $\sum n_i$ in Section 3.  
+2. **`1_population_data.csv`**: Contains data used to determine the values of $n_i$ and $\sum n_i$ in Section 3.  
 3. **`2_immigrate.ipynb`**: Uses linear regression to predict the number of U.S. immigrants in 2023.  
-4. **`3_N_death.xlsx`**: Provides data used to calculate $N_{\text{death}} = 2.310745$ million in Section 3.  
+4. **`3_N_death.csv`**: Provides data used to calculate $N_{\text{death}} = 2.310745$ million in Section 3.  
 5. **`4_partial_processes.pdf`**: Detailed derivation of $B(t), W(t), and R(t)$.  
 6. **`5_combined_plot.ipynb`**: Generates Figures 2–7 in Section 5.  
 7. **`6_pre.pdf`**: Presentation slides used for our project presentation.  
